@@ -40,4 +40,19 @@ class Database
 
         return $query->execute();
     }
+
+    public function update($table, $data, $where)
+    {
+        $columns = implode(", ", array_keys($data));
+        $placeholders = ":" . implode(", :", array_keys($data));
+
+        $sql = "UPDATE $table SET WHERE ";
+        $query = $this->pdo->prepare($sql);
+
+        foreach ($data as $key => $value) {
+            $query->bindValue(":$key", $value);
+        }
+
+        return $query->execute();
+    }
 }

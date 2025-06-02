@@ -1,8 +1,10 @@
 <?php
-include 'conn.php';
+
 include 'function.php';
 
-$database = new Fonksiyonlar();
+use Core\Database;
+
+$database = new Database();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

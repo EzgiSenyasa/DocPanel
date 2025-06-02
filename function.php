@@ -1,29 +1,43 @@
 <?php
-include 'conn.php';
 
-class Fonksiyonlar
+namespace Core;
+
+use \PDO;
+use \PDOException;
+
+class Database
 {
-    public function insert($pdo, $table, $data)
+
+    private $pdo;
+
+    public function __construct()
     {
+        $host = 'localhost';
+        $dbname = 'docpanel';
+        $username = 'root';
+        $password = '';
 
-        $columns = array_keys($data);
-        $placeholders = array_map(fn($col) => ":$col", $columns);
+        try {
+            $this->pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
 
-        echo $placeholders;
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Bağlantı hatası:" . $e->getMessage();
+        }
+    }
 
-        $columnsStr = implode(',', $columns);
-        $placeholdersStr = implode(',', $placeholders);
+    public function insert($table, $data)
+    {
+        $columns = implode(", ", array_keys($data));
+        $placeholders = ":" . implode(", :", array_keys($data));
 
-        $sql = "INSERT INTO $table ($columnsStr) VALUES ($placeholdersStr)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($data);
+        $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+        $query = $this->pdo->prepare($sql);
+
+        foreach ($data as $key => $value) {
+            $query->bindValue(":$key", $value);
+        }
+
+        return $query->execute();
     }
 }
-
-/*$data = [
-    'name' => 'Ezgi',
-    'email' => 'ezgi@example.com'
-];
-
-insert($pdo, 'users', $data);
-*/

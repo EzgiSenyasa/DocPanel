@@ -64,8 +64,6 @@ class Database
 
         $stmt->execute();
 
-        Logger::dbLog("[$this->clientIp] $this->requestMethod $this->requestUri - 200 OK - " . htmlspecialchars($sql) . " - " . json_encode($params));
-
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -79,8 +77,6 @@ class Database
         }
 
         $stmt->execute();
-
-        Logger::dbLog("[$this->clientIp] $this->requestMethod $this->requestUri - 200 OK - " . htmlspecialchars($sql) . " - " . json_encode($params));
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

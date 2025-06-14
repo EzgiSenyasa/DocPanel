@@ -1,10 +1,6 @@
 <?php
 
-include 'function.php';
-
-use Core\Database;
-
-$database = new Database();
+require_once(__DIR__ . '/php/autoloader.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

@@ -1,26 +1,7 @@
 <?php
-include 'function.php';
 
-use Core\Database;
-
-$database = new Database();
+require_once(__DIR__ . '/php/autoloader.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    $user = $database->select(
-        "SELECT * FROM users WHERE name = :name AND password = :password",
-        [
-            'name' => $name,
-            'password' => $password
-        ],
-        false
-    );
-
-    if ($user) {
-        echo "Giriş Başarılı";
-    } else {
-        echo "Eksik ya da yanlış bilgi";
-    }
+    echo $auth->login($_POST);
 }

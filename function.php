@@ -26,6 +26,7 @@ class Database
         }
     }
 
+
     public function insert($table, $data)
     {
         $columns = implode(", ", array_keys($data));
@@ -54,30 +55,32 @@ class Database
     }
 
 
-    public function fetchAll($sql, $params = [])
+    public function select($sql, $params = [], $fetchAll = true)
     {
-        $stmt = $this->pdo->prepare($sql);
+
+        $query = $this->pdo->prepare($sql);
 
         foreach ($params as $key => $value) {
-            $stmt->bindValue($key, $value);
+            $query->bindValue(":key", $value);
         }
 
-        $stmt->execute();
+        $query->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $fetchAll
+            ? $query->fetchAll(PDO::FETCH_ASSOC)
+            : $query->fetch(PDO::FETCH_ASSOC);
     }
 
 
-    public function fetch($sql, $params = [])
+    public function delete($sql, $params = [])
     {
-        $stmt = $this->pdo->prepare($sql);
+
+        $query = $this->pdo->prepare($sql);
 
         foreach ($params as $key => $value) {
-            $stmt->bindValue($key, $value);
+            $query->bindValue(":key", $value);
         }
 
-        $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $query->execute();
     }
 }

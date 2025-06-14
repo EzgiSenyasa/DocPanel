@@ -40,4 +40,48 @@ class Database
 
         return $query->execute();
     }
+
+
+    public function update($sql, $params = [])
+    {
+        $stmt = $this->pdo->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+
+        return $stmt->execute();
+    }
+
+
+    public function fetchAll($sql, $params = [])
+    {
+        $stmt = $this->pdo->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+
+        $stmt->execute();
+
+        Logger::dbLog("[$this->clientIp] $this->requestMethod $this->requestUri - 200 OK - " . htmlspecialchars($sql) . " - " . json_encode($params));
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function fetch($sql, $params = [])
+    {
+        $stmt = $this->pdo->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+
+        $stmt->execute();
+
+        Logger::dbLog("[$this->clientIp] $this->requestMethod $this->requestUri - 200 OK - " . htmlspecialchars($sql) . " - " . json_encode($params));
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

@@ -11,8 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $user = $database->select(
         "SELECT * FROM users WHERE name = :name AND password = :password",
-        ['name' => $name],
-        ['password' => $password],
+        [
+            'name' => $name,
+            'password' => $password
+        ],
         false
     );
 

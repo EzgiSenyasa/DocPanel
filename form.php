@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     $database->insert(
-        $pdo,
         'users',
         [
             'name' => $_POST['name'],

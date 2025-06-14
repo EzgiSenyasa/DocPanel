@@ -61,7 +61,7 @@ class Database
         $query = $this->pdo->prepare($sql);
 
         foreach ($params as $key => $value) {
-            $query->bindValue(":key", $value);
+            $query->bindValue(":$key", $value);
         }
 
         $query->execute();
@@ -78,7 +78,7 @@ class Database
         $query = $this->pdo->prepare($sql);
 
         foreach ($params as $key => $value) {
-            $query->bindValue(":key", $value);
+            $query->bindValue(":$key", $value);
         }
 
         return $query->execute();

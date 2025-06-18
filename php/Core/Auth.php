@@ -5,10 +5,10 @@ namespace Core;
 class Auth extends Database
 {
 
-   public function login($data)
+   public function login($input)
    {
-      $name = $data['name'] ?? '';
-      $password = $data['password'] ?? '';
+      $name = $input['name'] ?? '';
+      $password = $input['password'] ?? '';
 
       $user = $this->select(
          "SELECT * FROM users WHERE name = :name AND password = :password",
@@ -26,4 +26,19 @@ class Auth extends Database
       }
    }
 
+   public function getUser($id)
+   {
+
+      $userData = $this->select(
+         "SELECT * FROM users WHERE id = :id",
+         [
+            'id' => $id
+         ],
+         false
+      );
+
+      return json_encode($userData);
+   }
+
+   public function checkJWT() {}
 }

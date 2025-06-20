@@ -9,7 +9,7 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    flex-flow: column;
+    flex-flow: nowrap;
 }
 
 .main-name {
@@ -30,21 +30,17 @@ body {
 }
 
 .sidebar-button {
-    font-size: 30px;
-    border-radius: 5px;
-    background-color: #ffffff;
+    border-radius: 100px;
+    width: 55px;
+    height: 55px;
+    background-color: blue;
+    color: #fff;
     margin-top: 10px;
-}
-
-/*chatgbt*/
-#sidebar.active {
-    display: block;
-    position: absolute;
-    top: 60px;
-    /* Hamburger buton yüksekliği kadar boşluk bırak */
-    left: 0;
-    width: 75%;
-    z-index: 999;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    border: none;
+    z-index: 1;
 }
 
 .content-area {
@@ -52,6 +48,7 @@ body {
     max-width: 100%;
     flex: 0 0 auto;
     overflow: hidden;
+    padding: 15px;
 }
 
 .sidebar h4 {
@@ -95,6 +92,23 @@ body {
 
     .sidebar {
         display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .sidebar.active {
+        display: block;
+    }
+
+    .sidebar-button.active {
+        background-color: transparent;
+    }
+
+    .sidebar-button iconify-icon {
+        margin-top: 5px;
     }
 }
 
